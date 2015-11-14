@@ -27,6 +27,9 @@ for i in range(100):
 f1 = open("training.txt", "w")
 pickle.dump(net, f1)
 
+for i in range(1, 11):
+    print net.activate((i,))
+
 """threads = []
 for i in range(3):
     threads.append(TrainerThread(trainer))
