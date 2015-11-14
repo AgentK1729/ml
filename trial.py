@@ -18,11 +18,11 @@ ds = SupervisedDataSet(1, 1)
 for i in range(1, 51):
     ds.addSample((i,), (i%2,))
 
-trainer = BackpropTrainer(net, ds)
+trainer = BackpropTrainer(net, ds, learningrate=3, momentum=0.9)
 
 for i in range(100):
     print "Training session #%d" % (i+1)
-    trainer.trainUntilConvergence()
+    trainer.trainUntilConvergence(maxEpochs=100, validationProportion=0.1)
 
 f1 = open("training.txt", "w")
 pickle.dump(net, f1)
