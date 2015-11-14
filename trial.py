@@ -6,10 +6,10 @@ from pybrain.supervised.trainers import BackpropTrainer
 from multithread import TrainerThread
 import pickle
 
-# Returns a network that has 2 input, 3 hidden and 2 output neurons
-# net = buildNetwork(1, 3, 1, bias=True)
-f1 = open("training.txt", "r")
-net = pickle.load(f1)
+# Returns a network that has 1 input, 3 hidden and 1 output neurons
+net = buildNetwork(1, 3, 1, bias=True)
+#f1 = open("training.txt", "r")
+#net = pickle.load(f1)
 
 # Dataset with two dimensional input and one dimensional target
 ds = SupervisedDataSet(1, 1)
@@ -18,24 +18,12 @@ ds = SupervisedDataSet(1, 1)
 for i in range(1, 51):
     ds.addSample((i,), (i%2,))
 
-trainer = BackpropTrainer(net, ds, learningrate=3, momentum=0.9)
+trainer = BackpropTrainer(net, ds, learningrate=3, momentum=0.99)
 
-for i in range(100):
-    print "Training session #%d" % (i+1)
-    trainer.trainUntilConvergence(maxEpochs=100, validationProportion=0.1)
+trainer.trainUntilConvergence(maxEpochs=100, validationProportion=0.1, continueEpochs=10)
 
 f1 = open("training.txt", "w")
 pickle.dump(net, f1)
 
 for i in range(1, 11):
     print net.activate((i,))
-
-"""threads = []
-for i in range(3):
-    threads.append(TrainerThread(trainer))
-
-for thread in threads:
-    thread.start()
-
-for thread in threads:
-    thread.join()"""
