@@ -8,8 +8,6 @@ import pickle
 
 # Returns a network that has 1 input, 3 hidden and 1 output neurons
 net = buildNetwork(1, 3, 1, bias=True)
-#f1 = open("training.txt", "r")
-#net = pickle.load(f1)
 
 # Dataset with two dimensional input and one dimensional target
 ds = SupervisedDataSet(1, 1)
@@ -20,7 +18,8 @@ for i in range(1, 51):
 
 trainer = BackpropTrainer(net, ds, learningrate=3, momentum=0.99)
 
-trainer.trainUntilConvergence(maxEpochs=100, validationProportion=0.1, continueEpochs=10)
+for i in range(10):
+    trainer.train()
 
 f1 = open("training.txt", "w")
 pickle.dump(net, f1)
